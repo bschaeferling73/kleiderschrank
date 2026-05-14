@@ -380,7 +380,7 @@ export default function App() {
         body: JSON.stringify({
           model: "claude-haiku-4-5-20251001",
           max_tokens: 1000,
-          system: `Du bist ein persönlicher Stilberater. Wähle passende Kleidung aus der Liste.
+          system: `Du bist Bernds persönlicher Morgen-Stylist mit Humor. Es ist früh morgens, Bernd steht im Ankleidezimmer.
 
 PFLICHT (genau je 1): Oberteil, Hose, Schuhe
 OPTIONAL (max je 1): Jacke, Weste, Accessoire
@@ -388,11 +388,20 @@ VERBOTEN: 2x Jacke, 0x Hose
 
 ${rainRule}
 
-WICHTIG: Verwende AUSSCHLIESSLICH die exakten Namen aus der Liste unten.
-Kürze oder erfinde keine Namen. Kopiere sie 1:1.
+WICHTIG: Verwende AUSSCHLIESSLICH die exakten Namen aus der Liste. Kopiere sie 1:1.
 
-Antworte NUR mit diesem JSON (keine Backticks, keine Erklärung):
-{"greeting":"1 Satz","outfit_description":"2 Saetze","items":[{"name":"EXAKTER_NAME_AUS_LISTE"}]}`,
+Für "greeting": Ein witziger, persönlicher Morgengruß für Bernd – bezogen auf das Wetter.
+Beispiele:
+- Bei Regen: "Hey Bernd, heute regnet's wie aus Eimern – gut dass du keine Katze bist!"
+- Bei Wind: "Morgen Bernd! Heute bläst es – halt die Hose fest!"
+- Bei Kälte: "Guten Morgen Bernd, draußen friert sich der Postbote einen ab!"
+- Bei Sonnenschein: "Bernd! Die Sonne lacht – heute wird ein guter Tag!"
+Maximal 2 Sätze, locker und humorvoll, kein Outfit beschreiben.
+
+Für "outfit_description": Leer lassen – einfach "" zurückgeben.
+
+Antworte NUR mit diesem JSON (keine Backticks):
+{"greeting":"witziger Morgengruss","outfit_description":"","items":[{"name":"EXAKTER_NAME_AUS_LISTE"}]}`,
           messages: [{ role: "user", content: `Wetter: ${weatherDesc}\nKontext: ${contextDesc}\n\nVerfügbare Kleidung:\n${fileList}` }]
         })
       });
@@ -524,7 +533,7 @@ Antworte NUR mit diesem JSON (keine Backticks, keine Erklärung):
             <>
               <div className="context-badge">{officeType === "Office" ? "✦ Büro" : "✦ Halle 8"}</div>
               <div className="outfit-greeting">{outfit.greeting}</div>
-              <div className="outfit-desc">{outfit.outfit_description}</div>
+              {outfit.outfit_description && <div className="outfit-desc">{outfit.outfit_description}</div>}
 
               {outfit.items?.length > 0 && (
                 <>

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 // ── Konfiguration ─────────────────────────────────────────────────────────────
 const HOME_CITY   = "Boebingen an der Rems";
 const WORK_CITY   = "Oberkochen";
-const BASE_PATH   = "/Bilder"; // Vite serviert public/ als Root
+const BASE_PATH = import.meta.env.BASE_URL + "Bilder";
 
 // ── Kompletter Kleiderschrank ─────────────────────────────────────────────────
 // Format: { name (ohne .jpg), folder, cat }
